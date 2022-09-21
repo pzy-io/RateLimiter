@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "sHvYbrRxNY1wldoDjIs8U19pFj3+lrD5MFGliyVg9YYnpkoW8wweBDeWZIOrFLPISA0jUOoYnKmK13E1ulD7FA==",
+  "success": true,
+  "projectFilePath": "E:\\Sites\\pzy.io\\RateLimiter\\Pzy.RateLimiter\\Pzy.RateLimiter.csproj",
+  "expectedPackageFiles": [],
+  "logs": [
+    {
+      "code": "NU1803",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "You are running the 'restore' operation with an 'HTTP' source, 'http://nexus-h3.h3yun.com:8081/nexus/service/local/nuget/h3yun/'. Non-HTTPS access will be removed in a future version. Consider migrating to an 'HTTPS' source."
+    }
+  ]
+}

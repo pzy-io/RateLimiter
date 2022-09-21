@@ -1,0 +1,12 @@
+E:\Sites\pzy.io\RateLimiter\Pzy.RateLimiter\bin\Debug\net6.0\Pzy.RateLimiter.deps.json
+E:\Sites\pzy.io\RateLimiter\Pzy.RateLimiter\bin\Debug\net6.0\Pzy.RateLimiter.dll
+E:\Sites\pzy.io\RateLimiter\Pzy.RateLimiter\bin\Debug\net6.0\Pzy.RateLimiter.pdb
+E:\Sites\pzy.io\RateLimiter\Pzy.RateLimiter\obj\Debug\net6.0\Pzy.RateLimiter.csproj.AssemblyReference.cache
+E:\Sites\pzy.io\RateLimiter\Pzy.RateLimiter\obj\Debug\net6.0\Pzy.RateLimiter.GeneratedMSBuildEditorConfig.editorconfig
+E:\Sites\pzy.io\RateLimiter\Pzy.RateLimiter\obj\Debug\net6.0\Pzy.RateLimiter.AssemblyInfoInputs.cache
+E:\Sites\pzy.io\RateLimiter\Pzy.RateLimiter\obj\Debug\net6.0\Pzy.RateLimiter.AssemblyInfo.cs
+E:\Sites\pzy.io\RateLimiter\Pzy.RateLimiter\obj\Debug\net6.0\Pzy.RateLimiter.csproj.CoreCompileInputs.cache
+E:\Sites\pzy.io\RateLimiter\Pzy.RateLimiter\obj\Debug\net6.0\Pzy.RateLimiter.dll
+E:\Sites\pzy.io\RateLimiter\Pzy.RateLimiter\obj\Debug\net6.0\refint\Pzy.RateLimiter.dll
+E:\Sites\pzy.io\RateLimiter\Pzy.RateLimiter\obj\Debug\net6.0\Pzy.RateLimiter.pdb
+E:\Sites\pzy.io\RateLimiter\Pzy.RateLimiter\obj\Debug\net6.0\ref\Pzy.RateLimiter.dll
