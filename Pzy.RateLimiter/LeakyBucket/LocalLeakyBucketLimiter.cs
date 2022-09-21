@@ -66,7 +66,7 @@
 
                 // Calculate if the bucket's capacity is full
                 long wait = _lastTimestamp - nowTimestamp;
-                if (wait / _leakRate >= _bucketCapacity)
+                if (wait >= _bucketCapacity * _leakRate)
                 {
                     //Because the request is to be discarded here, all must keep the state before the new request is queued
                     limitExhausted = true;
