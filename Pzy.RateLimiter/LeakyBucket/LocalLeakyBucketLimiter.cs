@@ -60,18 +60,18 @@
             {
                 //current time in milliseconds
                 long nowTimestamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
+                var executionTimestamp = EvaluateExectionTimestamp(nowTimestamp, _lastTimestamp);
                 limitExhausted = false;
 
-                UpdateLastTimestamp(nowTimestamp);
-
                 // Calculate if the bucket's capacity is full
-                long wait = _lastTimestamp - nowTimestamp;
+                long wait = executionTimestamp - nowTimestamp;
                 if (wait >= _bucketCapacity * _leakRate)
                 {
                     //Because the request is to be discarded here, all must keep the state before the new request is queued
                     limitExhausted = true;
                 }
 
+                _lastTimestamp = executionTimestamp;
                 return (int)wait;
             }
             finally
@@ -81,16 +81,17 @@
         }
 
         /// <summary>
-        /// Update the time when the last request was processed
+        /// Evaluation (current request) execution time
         /// </summary>
         /// <param name="nowTimestamp">current time</param>
-        private void UpdateLastTimestamp(long nowTimestamp)
+        /// <param name="lastTimestamp">last exection time</param>
+        private long EvaluateExectionTimestamp(long nowTimestamp, long lastTimestamp)
         {
-            if (nowTimestamp < _lastTimestamp)
+            if (nowTimestamp < lastTimestamp)
             {
                 // It means that there are already requests in the queue,
                 // so the time for new requests to be processed after they come in and queue up is after the _leakRate
-                _lastTimestamp += _leakRate;
+                lastTimestamp += _leakRate;
             }
             else
             {
@@ -100,7 +101,7 @@
                 long offset = 0;
 
                 //Represents how long the current time has passed since the last time the request was processed
-                long delta = nowTimestamp - _lastTimestamp;
+                long delta = nowTimestamp - lastTimestamp;
 
                 if (delta < _leakRate)
                 {
@@ -111,8 +112,10 @@
                 //the offset should be 0, and the new request should be processed immediately.
 
                 //Update the time when the request should be processed
-                _lastTimestamp = nowTimestamp + offset;
+                lastTimestamp = nowTimestamp + offset;
             }
+
+            return lastTimestamp;
         }
     }
 }
