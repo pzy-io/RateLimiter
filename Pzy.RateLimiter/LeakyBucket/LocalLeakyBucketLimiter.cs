@@ -7,6 +7,7 @@
     /// Date: 2022-09-21
     /// 
     /// Reference links:
+    /// https://pzy.io/posts/leaky-bucket-limiter-principle-algorithm/
     /// https://zhuanlan.zhihu.com/p/441005648
     /// https://github.com/mennanov/limiters/blob/master/leakybucket.go
     /// </summary>
@@ -44,14 +45,15 @@
         }
 
         /// <summary>
-        /// Limit returns the time duration to wait before the request can be processed.
-        /// If the last request happened earlier than the rate this method returns zero duration.
+        /// Acquire returns the lock whether can be executed before the request can be processed.
         /// </summary>
-        /// <param name="limitExhausted">It returns limitExhausted(true) if the the request overflows the bucket's capacity. In this case the returned duration
-        ///  means how long it would have taken to wait for the request to be processed if the bucket was not overflowed.
+        /// <param name="waitMilliseconds">the time duration (in milliseconds) to wait before the request can be processed.
         /// </param>
-        /// <returns>the time duration (in milliseconds) to wait before the request can be processed.</returns>
-        public int Limit(out bool limitExhausted)
+        /// <returns>It returns false if the the request overflows the bucket's capacity.
+        /// In this case the returned duration means how long it would have taken to wait for the request to be processed 
+        /// if the bucket was not overflowed.
+        /// </returns>
+        public bool Acquire(out long waitMilliseconds)
         {
             //Lock here to ensure that each request is processed in order
             _semaphore.Wait();
@@ -61,18 +63,17 @@
                 //current time in milliseconds
                 long nowTimestamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
                 var executionTimestamp = EvaluateExectionTimestamp(nowTimestamp, _lastTimestamp);
-                limitExhausted = false;
 
                 // Calculate if the bucket's capacity is full
-                long wait = executionTimestamp - nowTimestamp;
-                if (wait >= _bucketCapacity * _leakRate)
+                waitMilliseconds = executionTimestamp - nowTimestamp;
+                if (waitMilliseconds >= _bucketCapacity * _leakRate)
                 {
                     //Because the request is to be discarded here, all must keep the state before the new request is queued
-                    limitExhausted = true;
+                    return false;
                 }
 
                 _lastTimestamp = executionTimestamp;
-                return (int)wait;
+                return true;
             }
             finally
             {
